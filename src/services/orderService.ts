@@ -24,25 +24,26 @@ class OrderService {
 );
 
     // Create the order with items
-    const order = await prisma.order.create({
-      data: {
-        userId,
-        payment_method,
-        expected_delivery,
-        total_amount: totalAmount,
-        items: {
-          create: cart.items.map(
-            (item: typeof cart.items[number]) => ({
-              productId: item.productId,
-              quantity: item.quantity,
-              price: item.product.price,
-            })
-          ),
-        },
-      },
-      include: { items: { include: { product: true } } },
-    });
+const order = await prisma.order.create({
+  data: {
+    payment_method,
+    expected_delivery,
+    userId,
 
+    items: {
+      create: cart.items.map(item => ({
+        quantity: item.quantity,
+        totalPrice: item.totalPrice,
+        product: {
+          connect: { id: item.productId }
+        }
+      }))
+    }
+  },
+  include: {
+    items: true
+  }
+});
     // Clear the cart
     await prisma.cartItem.deleteMany({ where: { cartId: cart.id } });
 
