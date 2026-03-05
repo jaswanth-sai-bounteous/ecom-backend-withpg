@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  
   "name": "express-node-example",
   "version": "1.0.0",
   "description": "Basic Express + TypeScript CRUD API for products",
