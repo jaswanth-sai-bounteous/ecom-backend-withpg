@@ -3,6 +3,9 @@ import express from "express";
 import dotenv from "dotenv";
 import { prisma } from "./lib/prisma";
 dotenv.config();
+import cors from "cors";
+
+
 // Import route modules
 import userRouter from "./routes/userRoutes";
 import productRouter from "./routes/productRoutes";
@@ -12,6 +15,11 @@ import featuredRouter from "./routes/featuredRoutes";
 
 
 const app = express();
+app.use(
+  cors({
+    origin: "*"
+  })
+);
 app.use(express.json());
 
 // ================= Prisma Connection =================
